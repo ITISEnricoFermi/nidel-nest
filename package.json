@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/ITISEnricoFermi/nidel-nest.git"
   },
-  "author": "",
+  "author": "Riccardo Sangiorgio <richard.sangiorgio@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ITISEnricoFermi/nidel-nest/issues"
