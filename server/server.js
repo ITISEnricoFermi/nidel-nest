@@ -1,46 +1,47 @@
-const express = require('express')
-const http = require('http')
-const bodyParser = require('body-parser')
-const cookieParser = require('cookie-parser')
-const socketIO = require('socket.io')
-const path = require('path')
-const helmet = require('helmet')
-const history = require('connect-history-api-fallback')
-const compression = require('compression')
-const morgan = require('morgan')
+require('./config/config.js')
 
-let app = express()
-var server = http.createServer(app)
-const io = socketIO(server)
+const colors = require('colors')
+const ioClient = require('socket.io-client')
+const SerialPort = require('serialport')
+const ReadLine = SerialPort.parsers.Readline
 
-const port = process.env.PORT || 3000
+const client = ioClient('https://sciencewatching.com', {secure: true, rejectUnauthorized: false, transports: ['websocket', 'flashsocket', 'polling']})
 
-app.use(history())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(cookieParser())
-app.use(helmet())
-app.use(morgan('dev'))
-app.use(compression())
+// if (process.env.PORT) {
+//   throw new Error('PORT is empty.')
+// }
 
-app.use((req, res, next) => {
-  req.messages = []
-  next()
+const port = new SerialPort(process.env.PORT, {
+  baudRate: 9600
 })
 
-app.use(express.static(path.join(__dirname, '/public')))
+const parser = port.pipe(new ReadLine({
+  delimiter: '\r\n'
+}))
 
-io.on('connection', (socket) => {
-  // socket.on('newDocument', () => {
-  //   io.emit('newDocument')
-  // })
-  //
-  // socket.on('userDeleted', (user) => {
-  //   // io.emit('userDeleted', user)
-  //   socket.broadcast.emit('userDeleted')
-  // })
+// Comunicazione con il server web
+client.on('connect', () => {
+  console.log('Connected to the server.'.green)
 })
 
-server.listen(port, () => {
-  console.log(`Server started on port ${port}.`)
+parser.on('open', () => {
+  console.log(`Connection is open on port ${process.env.PORT}.`.orange)
+})
+
+parser.on('data', (data) => {
+  let sensArr = data.split(',')
+  let datArr = []
+  for (let i = 0; i < sensArr.length; i++) {
+    datArr[i] = sensArr[i].split(' ')
+  }
+  console.log(colors.rainbow(data))
+  client.emit('data', data)
+})
+
+parser.on('error', err => {
+  console.log(err)
+})
+
+port.on('error', err => {
+  console.log(err)
 })
