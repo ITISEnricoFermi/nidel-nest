@@ -1,6 +1,6 @@
 {
   "development": {
-    "port": 3000,
+    "port": "/dev/ttyUSB0",
     "MONGODB_URI": "mongodb://localhost:27017/nidle",
     "JWT_SECRET": "jwtSecret"
   }
