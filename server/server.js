@@ -11,7 +11,9 @@ const client = ioClient('https://sciencewatching.com', {secure: true, rejectUnau
 //   throw new Error('PORT is empty.')
 // }
 
-const port = new SerialPort(process.env.PORT, {
+const serial = process.env.PORT
+
+const port = new SerialPort(serial, {
   baudRate: 9600
 })
 
@@ -25,7 +27,7 @@ client.on('connect', () => {
 })
 
 parser.on('open', () => {
-  console.log(`Connection is open on port ${process.env.PORT}.`.orange)
+  console.log(`Connection is open on port ${serial}.`.orange)
 })
 
 parser.on('data', (data) => {
