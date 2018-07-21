@@ -4,7 +4,7 @@ const ioClient = require('socket.io-client')
 const SerialPort = require('serialport')
 const ReadLine = SerialPort.parsers.Readline
 
-const client = ioClient('https://sciencewatching.com', {
+const client = ioClient('https://live.sciencewatching.com', {
   secure: true,
   rejectUnauthorized: false,
   transports: ['websocket', 'flashsocket', 'polling']
