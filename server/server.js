@@ -3,6 +3,7 @@ require('./config/config.js')
 const ioClient = require('socket.io-client')
 const SerialPort = require('serialport')
 const ReadLine = SerialPort.parsers.Readline
+const colors = require('colors')
 
 const client = ioClient('https://live.sciencewatching.com', {
   secure: true,
