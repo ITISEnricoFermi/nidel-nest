@@ -37,11 +37,11 @@ parser.on('data', (data) => {
 
   switch (type) {
     case 't':
-      console.log('Temperature:', value)
+      console.log('Temperature:'.magenta, value)
       client.emit('temperature', value)
       break
     case 'h':
-      console.log('Humidity:', value)
+      console.log('Humidity:'.cyan, value)
       client.emit('humidity', value)
       break
   }
