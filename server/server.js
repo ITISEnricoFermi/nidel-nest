@@ -16,7 +16,7 @@ const client = ioClient('https://sciencewatching.com', {
 
 const serial = process.env.PORT
 
-const port = new SerialPort(serial, {baudRate: 9600})
+const port = new SerialPort(serial || '/dev/ttyUSB0', {baudRate: 9600})
 
 const parser = port.pipe(new ReadLine({delimiter: '\r\n'}))
 
@@ -30,7 +30,7 @@ parser.on('open', () => {
 })
 
 parser.on('data', (data) => {
-  data = data.split[':']
+  data = data.split(':')
   let type = data[0]
   let value = data[1]
 
