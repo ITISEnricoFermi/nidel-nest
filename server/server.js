@@ -1,11 +1,14 @@
 require('./config/config.js')
 
-const colors = require('colors')
 const ioClient = require('socket.io-client')
 const SerialPort = require('serialport')
 const ReadLine = SerialPort.parsers.Readline
 
-const client = ioClient('https://sciencewatching.com', {secure: true, rejectUnauthorized: false, transports: ['websocket', 'flashsocket', 'polling']})
+const client = ioClient('https://sciencewatching.com', {
+  secure: true,
+  rejectUnauthorized: false,
+  transports: ['websocket', 'flashsocket', 'polling']
+})
 
 // if (process.env.PORT) {
 //   throw new Error('PORT is empty.')
@@ -13,13 +16,9 @@ const client = ioClient('https://sciencewatching.com', {secure: true, rejectUnau
 
 const serial = process.env.PORT
 
-const port = new SerialPort(serial, {
-  baudRate: 9600
-})
+const port = new SerialPort(serial, {baudRate: 9600})
 
-const parser = port.pipe(new ReadLine({
-  delimiter: '\r\n'
-}))
+const parser = port.pipe(new ReadLine({delimiter: '\r\n'}))
 
 // Comunicazione con il server web
 client.on('connect', () => {
@@ -31,13 +30,20 @@ parser.on('open', () => {
 })
 
 parser.on('data', (data) => {
-  let sensArr = data.split(',')
-  let datArr = []
-  for (let i = 0; i < sensArr.length; i++) {
-    datArr[i] = sensArr[i].split(' ')
+  data = data.split[':']
+  let type = data[0]
+  let value = data[1]
+
+  switch (type) {
+    case 't':
+      console.log('Temperature:', value)
+      client.emit('temperature', value)
+      break
+    case 'h':
+      console.log('Humidity:', value)
+      client.emit('humidity', value)
+      break
   }
-  console.log(colors.rainbow(data))
-  client.emit('data', data)
 })
 
 parser.on('error', err => {
