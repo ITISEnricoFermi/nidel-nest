@@ -34,14 +34,15 @@ parser.on('data', (data) => {
   data = data.split(':')
   let type = data[0]
   let value = data[1]
+  let time = new Date().toLocaleTimeString()
 
   switch (type) {
     case 't':
-      console.log('Temperature:'.magenta, value)
+      console.log(colors.yellow(time), 'Temperature:'.magenta, value)
       client.emit('temperature', value)
       break
     case 'h':
-      console.log('Humidity:'.cyan, value)
+      console.log(colors.yellow(time), 'Humidity:'.cyan, value)
       client.emit('humidity', value)
       break
   }
