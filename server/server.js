@@ -37,13 +37,21 @@ parser.on('data', (data) => {
   let time = new Date().toLocaleTimeString()
 
   switch (type) {
-    case 't':
-      console.log(colors.yellow(time), 'Temperature:'.magenta, value)
-      client.emit('temperature', value)
+    case 't_int':
+      console.log(colors.yellow(time), 'Internal temperature:'.magenta, value)
+      client.emit('temperature_internal', value)
       break
-    case 'h':
-      console.log(colors.yellow(time), 'Humidity:'.cyan, value)
-      client.emit('humidity', value)
+    case 'h_int':
+      console.log(colors.yellow(time), 'Internal humidity:'.cyan, value)
+      client.emit('humidity_internal', value)
+      break
+    case 't_ext':
+      console.log(colors.yellow(time), 'External temperature:'.magenta, value)
+      client.emit('temperature_external', value)
+      break
+    case 'h_ext':
+      console.log(colors.yellow(time), 'External humidity:'.cyan, value)
+      client.emit('humidity_external', value)
       break
   }
 })
