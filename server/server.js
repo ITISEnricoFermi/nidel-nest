@@ -42,17 +42,30 @@ parser.on('data', (data) => {
       console.log(colors.yellow(time), 'Internal temperature:'.magenta, value)
       client.emit('temperature_internal', value)
       break
-    case 'h_int':
-      console.log(colors.yellow(time), 'Internal humidity:'.cyan, value)
-      client.emit('humidity_internal', value)
-      break
     case 't_ext':
       console.log(colors.yellow(time), 'External temperature:'.magenta, value)
       client.emit('temperature_external', value)
       break
+    case 'h_int':
+      console.log(colors.yellow(time), 'Internal humidity:'.cyan, value)
+      client.emit('humidity_internal', value)
+      break
+
     case 'h_ext':
       console.log(colors.yellow(time), 'External humidity:'.cyan, value)
       client.emit('humidity_external', value)
+      break
+    case 'p_int':
+      console.log(colors.yellow(time), 'Internal lum:'.yellow, value)
+      client.emit('lum_internal', value)
+      break
+    case 'p_ext':
+      console.log(colors.yellow(time), 'External lum:'.yellow, value)
+      client.emit('lum_external', value)
+      break
+    case 'g':
+      console.log(colors.yellow(time), 'Gas:'.red, value)
+      client.emit('g', value)
       break
   }
 })
