@@ -64,8 +64,8 @@ parser.on('data', (data) => {
       client.emit('lum_external', value)
       break
     case 'g':
-      console.log(colors.yellow(time), 'Gas:'.red, value)
-      client.emit('g', value)
+      console.log(colors.yellow(time), 'Gas:'.blue, value)
+      client.emit('gas', value)
       break
   }
 })
