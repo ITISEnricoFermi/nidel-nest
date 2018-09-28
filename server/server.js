@@ -1,6 +1,6 @@
 require('./config/config.js')
 
-const camera = require('./lib/camera')
+// const camera = require('./lib/camera')
 const ioClient = require('socket.io-client')
 const SerialPort = require('serialport')
 const ReadLine = SerialPort.parsers.Readline
@@ -57,9 +57,9 @@ parser.on('data', (data) => {
   }
 })
 
-camera.on('frame', frame => {
-  client.emit('camera', frame)
-})
+// camera.on('frame', frame => {
+//   client.emit('camera', frame)
+// })
 
 parser.on('error', err => {
   console.log(err)
