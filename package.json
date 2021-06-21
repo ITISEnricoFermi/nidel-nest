@@ -18,7 +18,7 @@
   "homepage": "https://github.com/ITISEnricoFermi/nidel-nest#readme",
   "dependencies": {
     "colors": "^1.3.2",
-    "serialport": "^7.1.5",
+    "serialport": "^9.2.0",
     "socket.io-client": "^2.1.1"
   },
   "devDependencies": {
